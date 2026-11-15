@@ -1,0 +1,12 @@
+{
+  "name": "Latinista",
+  "short_name": "Latinista",
+  "description": "Traduzione e analisi di versioni di latino",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#faf7f2",
+  "theme_color": "#8c2f39",
+  "lang": "it"
+}
