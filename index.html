@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Latinista</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#8c2f39">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Latinista">
+<link rel="apple-touch-icon" href="icon-192.png"><link rel="icon" type="image/png" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f8f6f3;--card:#fff;--tx:#1c1a19;--mu:#6b6560;--ac:#8c2f39;--ac2:#f6e8e9;--bd:#e8e3dc;--in:#f1ede7;--on:#fff;--hl:#ffe08a;--hlt:#1c1a19;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#151312;--card:#201d1b;--tx:#f1ece6;--mu:#a29a92;--ac:#e0848d;--ac2:#3a2528;--bd:#33302c;--in:#2a2623;--on:#1a1210;--hl:#6b5420;--hlt:#fff;color-scheme:dark}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.55 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));-webkit-text-size-adjust:100%}
+header{position:sticky;top:0;z-index:6;display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--bg);border-bottom:1px solid var(--bd)}
+header b{font-size:18px;font-weight:700}
+#burger{width:44px;height:44px;padding:0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;background:none;border:0}
+#burger span{display:block;width:22px;height:2.5px;border-radius:2px;background:var(--tx)}
+#scrim{position:fixed;inset:0;background:#0006;z-index:8}
+#drawer{position:fixed;top:0;bottom:0;left:0;width:82%;max-width:320px;background:var(--card);z-index:9;transform:translateX(-102%);transition:transform .22s;padding:calc(20px + env(safe-area-inset-top,0px)) 14px 20px;display:flex;flex-direction:column;gap:4px}
+#drawer.open{transform:none}#drawer h2{margin:0 8px 14px;font-size:22px}
+#drawer button{border:0;background:none;text-align:left;font-size:17px;padding:14px 12px;border-radius:12px;width:100%}
+#drawer button:active{background:var(--in)}
+main{max-width:760px;margin:0 auto;padding:22px 18px}
+h1{font-size:30px;line-height:1.2;font-weight:700;margin:12px 0 8px;letter-spacing:-.02em}.sub{color:var(--mu);margin:0 0 20px;font-size:15px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:18px;margin:0 0 16px}
+textarea,input,select{width:100%;border:1px solid var(--bd);background:var(--in);color:var(--tx);border-radius:14px;padding:14px;font:inherit;min-height:46px}
+textarea{min-height:200px;font-size:18px;line-height:1.6;resize:vertical}
+textarea:focus,input:focus,select:focus{outline:2px solid var(--ac)}
+label{display:block;font-size:14px;color:var(--mu);margin:14px 0 6px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+button{font:inherit;cursor:pointer;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:14px;padding:11px 16px;min-height:46px}
+button.p{background:var(--ac);border-color:var(--ac);color:var(--on);font-weight:600;flex:1}
+button:disabled{opacity:.5}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.tiles button{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:18px;border-radius:20px;text-align:left;font-weight:600}.tiles small{font-weight:400;color:var(--mu)}
+.rec{display:block;width:100%;text-align:left;margin-top:8px}.rec small{display:block;color:var(--mu)}
+.la{font-size:21px;line-height:1.7;font-weight:600;margin-bottom:6px}
+.lw{cursor:pointer;border-radius:7px;padding:1px 3px}
+.g{border-bottom:1.5px dotted var(--mu);cursor:pointer;border-radius:4px}
+.hl{background:var(--hl)!important;color:var(--hlt)!important}
+.gr{font-size:18px;margin:6px 0 2px}
+.il{display:flex;flex-wrap:wrap;gap:8px 5px;margin:6px 0}
+.col{display:inline-flex;flex-direction:column;padding:5px 8px;border-radius:10px;background:var(--in)}.col b{font-weight:600}.col i{font-style:normal;color:var(--mu);font-size:13px}
+.pill{display:inline-block;background:var(--ac2);color:var(--ac);border-radius:99px;padding:3px 12px;font-size:13px;font-weight:600}
+.scan{font:16px/1.6 ui-monospace,Menlo,monospace;background:var(--in);border-radius:10px;padding:8px 10px;margin:8px 0;overflow-x:auto;white-space:nowrap}
+.fig{border-left:3px solid var(--ac);padding:4px 12px;margin:8px 0;font-size:15px}
+.nota{font-size:14px;color:var(--mu);margin:8px 0}
+details{margin-top:8px}summary{cursor:pointer;color:var(--mu);font-size:14px;min-height:32px}
+.words{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.w{padding:6px 11px;min-height:38px;border-radius:11px}
+.det{background:var(--ac2);border-radius:14px;padding:12px;font-size:15px;display:none;margin-top:6px}.det.on{display:block}
+.det .pd{font-style:italic;margin:4px 0}
+.seg{display:flex;background:var(--in);border-radius:14px;padding:4px;gap:4px;margin-bottom:16px}
+.seg button{flex:1;border:0;background:none;min-height:40px;padding:6px 4px;font-size:14px}.seg button.on{background:var(--card);box-shadow:0 1px 3px #0002;font-weight:700}
+.v,.sb{display:none}.v.on,.sb.on{display:block}
+.empty{color:var(--mu);text-align:center;padding:28px 8px}
+.bar{height:6px;background:var(--in);border-radius:9px;overflow:hidden;margin:0 0 14px}.bar i{display:block;height:100%;background:var(--ac);width:0;transition:width .3s}
+.msg{padding:11px 15px;border-radius:18px;margin:9px 0;max-width:92%;white-space:pre-wrap}
+.msg.user{background:var(--ac);color:var(--on);margin-left:auto}.msg.ai{background:var(--card);border:1px solid var(--bd)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:6px 0 10px}.chips button{white-space:nowrap;font-size:14px;min-height:40px;padding:6px 14px;border-radius:99px}
+.ask{display:flex;gap:8px}.ask input{flex:1;min-width:0}
+#selbar{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom,0px));max-width:736px;margin:0 auto;background:var(--tx);color:var(--bg);border-radius:18px;padding:12px 14px;z-index:7;display:flex;gap:10px;align-items:center;box-shadow:0 6px 24px #0004}
+#selbar[hidden]{display:none}#selt{flex:1;font-size:14px;min-width:0}
+#selbar button{min-height:42px;border:0;font-weight:600}#selbar .p{flex:0 0 auto;padding:8px 14px}#selbar .x{background:none;color:var(--bg);padding:8px}
+.err{color:#c0392b;font-size:14px;margin-top:10px}.ok{color:#2f6f4f;font-size:14px;margin-top:10px}
+@media (prefers-color-scheme:dark){.err{color:#ff8f80}.ok{color:#7fd1a6}}
+</style></head><body>
+<header><button id="burger" aria-label="Menu"><span></span><span></span><span></span></button><b id="ttl">Latinista</b></header>
+<div id="scrim" hidden></div>
+<aside id="drawer"><h2>Latinista</h2>
+<button data-v="home">✍️ Nuova versione</button><button data-v="res">📖 Versione corrente</button><button data-v="chat">💬 Chiedi all’AI</button><button data-v="hist">🕘 Cronologia</button><button data-v="set">⚙️ Impostazioni</button></aside>
+<main>
+<section class="v on" id="v-home">
+<h1>Che versione studiamo oggi?</h1><p class="sub">Incolla il testo o fotografa la pagina: traduzione, analisi e studio guidato con l’AI.</p>
+<div class="tiles"><button id="cam">📷<span>Scatta foto</span><small>Leggo il testo dalla pagina</small></button><button id="img">🖼️<span>Carica immagine</span><small>Da galleria o file</small></button></div>
+<div class="card"><textarea id="src" placeholder="Oppure incolla qui il testo latino…" spellcheck="false"></textarea>
+<div class="row"><button id="ex">Esempio</button><button id="clr">Pulisci</button></div>
+<input type="file" id="f1" accept="image/*" capture="environment" hidden><input type="file" id="f2" accept="image/*" hidden>
+<div id="st" class="sub" style="margin:12px 0 0"></div><div class="err" id="er"></div>
+<div class="row"><button class="p" id="go">Traduci e analizza</button><button id="stop" hidden>Ferma</button></div></div>
+<div id="recent"></div>
+</section>
+
+<section class="v" id="v-res">
+<div id="bar" class="bar" hidden><i></i></div>
+<div class="seg" id="tabs"><button data-s="tr" class="on">Traduzione</button><button data-s="an">Analisi</button><button data-s="st">Studio con AI</button></div>
+<div class="sb on" id="s-tr"><div class="seg" id="seg"><button data-m="gram" class="on">Grammaticale</button><button data-m="lit">Letterale</button><button data-m="both">Entrambe</button></div><p class="sub" style="margin-bottom:14px">Tocca o seleziona una parola italiana: il latino corrispondente si evidenzia.</p><div id="trList"></div></div>
+<div class="sb" id="s-an"><div id="anList"></div></div>
+<div class="sb" id="s-st"><div class="card row" style="align-items:center;margin-top:0"><button id="sprev">‹</button><b id="stp" style="flex:1;text-align:center"></b><button id="snext">›</button></div><div id="cS"></div><div class="chips" id="chS"></div><div class="ask"><input id="qS" placeholder="Rispondi o chiedi un indizio…" enterkeyhint="send"><button class="p" id="sS" style="flex:0 0 auto">Invia</button></div></div>
+</section>
+
+<section class="v" id="v-chat"><h1>Chiedi all’AI</h1><p class="sub">Incolla anche un solo verso: ti dico autore, opera e contesto, poi lo spieghiamo insieme.</p>
+<div id="cF"></div><div class="chips" id="chF"></div><div class="ask"><input id="qF" placeholder="Scrivi una domanda o incolla un verso…" enterkeyhint="send"><button class="p" id="sF" style="flex:0 0 auto">Invia</button></div></section>
+
+<section class="v" id="v-hist"><h1>Cronologia</h1><p class="sub">Le versioni tradotte restano salvate su questo dispositivo.</p><div id="hl"></div></section>
+
+<section class="v" id="v-set"><h1>Impostazioni</h1><p class="sub">La chiave resta salvata solo su questo dispositivo.</p>
+<div class="card"><label for="key">Chiave API Anthropic</label><input id="key" type="password" placeholder="sk-ant-…" autocomplete="off" autocapitalize="off" spellcheck="false">
+<label for="mdl">Modello</label><select id="mdl"><option value="claude-sonnet-5-5">Sonnet 5.5 — equilibrato (consigliato)</option><option value="claude-opus-5-5">Opus 5.5 — più accurato, più costoso</option><option value="claude-haiku-5-5">Haiku 5.5 — più veloce ed economico</option></select>
+<div class="row"><button class="p" id="savek">Salva</button><button id="testk">Prova connessione</button><button id="delk">Rimuovi chiave</button></div><div id="setmsg"></div>
+<p class="sub" style="margin-top:16px">Crea la chiave su console.anthropic.com → API Keys. Le richieste consumano il credito del tuo account API. Non usare l’app su dispositivi condivisi.</p></div></section>
+</main>
+<div id="selbar" hidden><span id="selt"></span><button class="p" id="selask">Chiedi all’AI</button><button class="x" id="selx" aria-label="Chiudi">✕</button></div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+let results=[],ctx=null,chatF=[],chatS=[],idx=0,curId=null,mode='gram',busy=false,ctl=null,sel={i:-1,s:new Set()};
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\*(.+?)\*/g,'<i>$1</i>');
+const store={get(k,d=''){try{return localStorage.getItem(k)||d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,v);return true}catch(e){return false}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+const H={load(){try{return JSON.parse(localStorage.getItem('lat_h')||'[]')}catch(e){return[]}},save(a){while(true){try{localStorage.setItem('lat_h',JSON.stringify(a));return}catch(e){if(!a.length)return;a.pop()}}}};
+const copy=e=>({no_key:'Inserisci la chiave API nelle Impostazioni.',bad_key:'Chiave API non valida: controllala nelle Impostazioni.',rate_limited:'Troppe richieste o limite raggiunto: riprova tra poco.',invalid_json:'Risposta incompleta: riprova, magari con un testo più breve.',network:'Connessione assente: controlla la rete e riprova.'}[e.code]||('Errore: '+(e.message||'riprova tra poco.')));
+
+/* API Anthropic (streaming) */
+async function claudeCall(messages,{signal,onText,maxTokens=4096,system}={}){
+ const key=store.get('lat_key');if(!key)throw{code:'no_key'};let res;
+ try{res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',signal,headers:{'content-type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:store.get('lat_model','claude-sonnet-5-5'),max_tokens:maxTokens,stream:true,system,messages})})}
+ catch(e){if(e.name==='AbortError')throw{code:'cancelled'};throw{code:'network'}}
+ if(!res.ok){let m='';try{m=(await res.json()).error?.message||''}catch(e){}throw{code:res.status===401?'bad_key':res.status===429?'rate_limited':'upstream_error',message:m}}
+ const rd=res.body.getReader(),dec=new TextDecoder();let buf='',text='';
+ try{for(;;){const{done,value}=await rd.read();if(done)break;buf+=dec.decode(value,{stream:true});let i;
+  while((i=buf.indexOf('\n'))>=0){const l=buf.slice(0,i).trim();buf=buf.slice(i+1);if(!l.startsWith('data:'))continue;let j;try{j=JSON.parse(l.slice(5))}catch(e){continue}
+   if(j.type==='content_block_delta'&&j.delta?.type==='text_delta'){text+=j.delta.text;onText&&onText({text})}else if(j.type==='error')throw{code:'upstream_error',message:j.error?.message}}}}
+ catch(e){if(e.name==='AbortError')throw{code:'cancelled',text};throw e.code?e:{code:'network',text}}
+ return{text};
+}
+const parseJ=(t,o,c)=>{const a=t.indexOf(o),b=t.lastIndexOf(c);if(a<0||b<a)throw{code:'invalid_json'};try{return JSON.parse(t.slice(a,b+1))}catch(e){throw{code:'invalid_json'}}};
+
+/* Navigazione */
+const TT={home:'Latinista',res:'Versione',chat:'Chiedi all’AI',hist:'Cronologia',set:'Impostazioni'};
+function go(v){if(v==='res'&&!results.length)v='home';$$('.v').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));$('#ttl').textContent=TT[v];drawer(false);if(v==='home')recent();if(v==='hist')histList();scrollTo(0,0)}
+function tab(s){$$('.sb').forEach(x=>x.classList.toggle('on',x.id==='s-'+s));$$('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.s===s));if(s==='st')upd()}
+const drawer=o=>{$('#drawer').classList.toggle('open',o);$('#scrim').hidden=!o};
+$('#burger').onclick=()=>drawer(true);$('#scrim').onclick=()=>drawer(false);
+$$('#drawer button').forEach(b=>b.onclick=()=>go(b.dataset.v));
+$$('#tabs button').forEach(b=>b.onclick=()=>tab(b.dataset.s));
+
+/* Impostazioni */
+$('#key').value=store.get('lat_key');$('#mdl').value=store.get('lat_model','claude-sonnet-5-5');
+const msg=(t,c)=>$('#setmsg').innerHTML=`<div class="${c}">${esc(t)}</div>`;
+$('#savek').onclick=()=>{const k=$('#key').value.trim();if(!k)return msg('Inserisci una chiave.','err');store.set('lat_key',k)&&store.set('lat_model',$('#mdl').value)?msg('Salvato ✓','ok'):msg('Impossibile salvare su questo browser.','err')};
+$('#delk').onclick=()=>{store.del('lat_key');$('#key').value='';msg('Chiave rimossa.','ok')};
+$('#testk').onclick=async()=>{const k=$('#key').value.trim();if(k)store.set('lat_key',k);store.set('lat_model',$('#mdl').value);msg('Verifica in corso…','ok');
+ try{await claudeCall([{role:'user',content:'Rispondi solo: ok'}],{maxTokens:20});msg('Connessione riuscita ✓','ok')}catch(e){msg(copy(e),'err')}};
+
+/* Input e OCR */
+$('#cam').onclick=()=>$('#f1').click();$('#img').onclick=()=>$('#f2').click();
+$('#clr').onclick=()=>{$('#src').value='';$('#er').textContent='';$('#st').textContent=''};
+$('#ex').onclick=()=>{$('#src').value='Arma virumque cano, Troiae qui primus ab oris\nItaliam, fato profugus, Laviniaque venit\nlitora, multum ille et terris iactatus et alto'};
+async function shrink(f){const bm=await createImageBitmap(f),s=Math.min(1,1800/Math.max(bm.width,bm.height)),c=document.createElement('canvas');c.width=Math.round(bm.width*s);c.height=Math.round(bm.height*s);c.getContext('2d').drawImage(bm,0,0,c.width,c.height);return c.toDataURL('image/jpeg',.85).split(',')[1]}
+[$('#f1'),$('#f2')].forEach(f=>f.onchange=async()=>{const file=f.files[0];f.value='';if(!file)return;$('#er').textContent='';
+ if(!store.get('lat_key')){$('#er').textContent=copy({code:'no_key'});return}
+ $('#st').textContent='Lettura dell’immagine in corso…';
+ try{const data=await shrink(file);const{text}=await claudeCall([{role:'user',content:[{type:'image',source:{type:'base64',media_type:'image/jpeg',data}},{type:'text',text:'Trascrivi fedelmente SOLO il testo latino presente nell’immagine (ignora numeri di riga, note e traduzioni). Un verso o periodo per riga, senza commenti.'}]}],{maxTokens:3000});
+  const c=$('#src').value.trim();$('#src').value=(c?c+'\n':'')+text.trim();$('#st').textContent='Testo riconosciuto: controllalo e correggilo se serve.'}
+ catch(e){$('#st').textContent='';$('#er').textContent=copy(e)}});
+
+/* Cronologia */
+function saveCur(){if(!curId)return;const a=H.load().filter(x=>x.id!==curId);a.unshift({id:curId,ts:Date.now(),src:$('#src').value,ctx,results,chatF:chatF.slice(-30),chatS:chatS.slice(-30),idx});H.save(a.slice(0,60))}
+const titleOf=e=>{const c=e.ctx||{},t=[c.autore,c.opera,c.passo].filter(Boolean).join(' – ');return t||(e.src||'').split('\n')[0].slice(0,48)||'Senza titolo'};
+const item=e=>`<button class="rec" data-o="${e.id}"><b>${esc(titleOf(e))}</b><small>${new Date(e.ts).toLocaleString('it-IT',{dateStyle:'medium',timeStyle:'short'})} · ${esc((e.src||'').slice(0,60))}</small></button>`;
+function recent(){const a=H.load().slice(0,3);$('#recent').innerHTML=a.length?'<p class="sub" style="margin:8px 0 0">Recenti</p>'+a.map(item).join(''):''}
+function histList(){const a=H.load();$('#hl').innerHTML=a.length?a.map(e=>`<div class="card" style="padding:6px"><div class="row" style="margin:0;flex-wrap:nowrap">${item(e).replace('class="rec"','class="rec" style="border:0;margin:0;flex:1"')}<button data-d="${e.id}" aria-label="Elimina" style="border:0">🗑️</button></div></div>`).join('')+'<div class="row"><button id="delall">Cancella tutta la cronologia</button></div>':'<p class="empty">Nessuna versione salvata ancora.</p>';const d=$('#delall');if(d)d.onclick=()=>{if(confirm('Cancellare tutta la cronologia?')){H.save([]);histList()}}}
+function openE(id){const e=H.load().find(x=>x.id===id);if(!e)return;curId=id;results=e.results||[];ctx=e.ctx||null;chatF=e.chatF||[];chatS=e.chatS||[];idx=e.idx||0;$('#src').value=e.src||'';renderRes();chats();sel={i:-1,s:new Set()};paint();go('res');tab('tr')}
+document.addEventListener('click',e=>{const o=e.target.closest('[data-o]');if(o)return openE(o.dataset.o);const d=e.target.closest('[data-d]');if(d){H.save(H.load().filter(x=>x.id!==d.dataset.d));histList()}});
+
+/* Analisi */
+function chunks(t){const P=[];t.split(/\n+/).map(s=>s.trim()).filter(Boolean).forEach(l=>l.length>420?P.push(...l.split(/(?<=[.;:?!])\s+/)):P.push(l));
+ const out=[];let c=[],n=0;for(const l of P){if((n+l.length>360||c.length>=4)&&c.length){out.push(c);c=[];n=0}c.push(l);n+=l.length}if(c.length)out.push(c);return out}
+const SCHEMA=`{"la":"riga originale","gram":"traduzione italiana grammaticale: fluida, corretta, fedele alla sintassi latina","meter":"metro (es. esametro dattilico, distico elegiaco, endecasillabo faleceo) oppure \\"prosa\\"","scan":"scansione con – (lunga) e ∪ (breve), piedi separati da | ; vuota se prosa","sint":"analisi del periodo in 1-2 frasi: proposizione principale, subordinate e loro tipo","fig":[{"n":"figura retorica o metrica (anafora, iperbato, allitterazione, chiasmo, sinalefe, cesura…)","t":"parole coinvolte","s":"spiegazione breve"}],"nota":"costrutti notevoli o difficoltà, altrimenti vuoto","w":[{"f":"parola ESATTAMENTE come nel testo, con eventuale punteggiatura","l":"lemma","p":"parte del discorso","a":"morfologia e funzione logica (es. acc. sing. m., oggetto; 3ª sing. pf. ind. att.)","d":"paradigma: nomi nom., gen., genere, declinazione; verbi i quattro temi e la coniugazione; aggettivi la classe","m":"significato nel contesto","g":"parole italiane che rendono questa parola nella traduzione grammaticale, COPIATE IDENTICHE da gram (anche più parole, es. il poeta); vuoto se non resa","x":"resa italiana letterale (1-3 parole)"}]}`;
+const PROMPT=(r,prev)=>`Sei un latinista esperto e rigoroso.${ctx&&(ctx.autore||ctx.genere)?` Contesto: ${[ctx.autore,ctx.opera,ctx.passo].filter(Boolean).join(', ')}; genere: ${ctx.genere||'?'}; metro: ${ctx.metro||'?'}.`:''}${prev?` Riga precedente, solo per continuità sintattica e NON da analizzare: «${prev}».`:''}
+Procedi così: (1) leggi l’intero periodo e individua verbo principale, soggetto e subordinate; (2) per ogni parola scegli il lemma giusto e verifica caso e concordanze, attento agli omografi (abl./nom. in -a, forme di sum/eo/fero/volo); (3) per i versi scandisci contando le sillabe, applica elisioni e correptio e verifica che il totale torni con il metro; (4) traduci. Le enclitiche (-que, -ve, -ne) restano unite alla parola ma vanno segnalate in "a". Rispondi SOLO con un array JSON valido, un oggetto per riga, stesso ordine, con questa forma:
+${SCHEMA}
+Includi TUTTE le parole nell’ordine del testo latino. Spiegazioni in italiano. Righe:
+`+r.map((x,i)=>(i+1)+'. '+x).join('\n');
+async function identify(t){const{text}=await claudeCall([{role:'user',content:`Il testo latino qui sotto può essere anche un solo verso o una frase staccata da un’opera: riconoscilo se possibile (es. Verg. Ecl. 1, 1-3). Rispondi SOLO con JSON: {"autore":"","opera":"","passo":"libro/capitolo e versi","genere":"","epoca":"","metro":"","contesto":"3-4 frasi: dove si colloca il passo, di cosa parla, perché è importante","confidenza":"alta|media|bassa"}. Se non lo riconosci lascia vuoti autore/opera/passo e in contesto scrivi cosa deduci da lingua, metro e contenuto. Non inventare riferimenti. Testo:\n`+t.slice(0,2500)}],{maxTokens:900});try{return parseJ(text,'{','}')}catch(e){return null}}
+
+const RM=new WeakMap(),isL=c=>!!c&&/\p{L}/u.test(c);
+function ranges(v){if(RM.has(v))return RM.get(v);const t=v.gram||'',lo=t.toLowerCase(),mask=new Array(t.length).fill(0),r=[];
+ (v.w||[]).map((w,j)=>[w,j]).sort((a,b)=>(b[0].g||'').length-(a[0].g||'').length).forEach(([w,j])=>{const g=(w.g||'').toLowerCase().trim();if(!g)return;let from=0,p;
+  while((p=lo.indexOf(g,from))>=0){const q=p+g.length;let ok=!isL(t[p-1])&&!isL(t[q]);for(let k=p;ok&&k<q;k++)if(mask[k])ok=false;if(ok){for(let k=p;k<q;k++)mask[k]=1;r.push([p,q,j]);break}from=p+1}});
+ r.sort((a,b)=>a[0]-b[0]);RM.set(v,r);return r}
+function gramHTML(i){const v=results[i],t=v.gram||'';let h='',p=0;ranges(v).forEach(([a,b,j])=>{h+=esc(t.slice(p,a))+`<span class="g" data-i="${i}" data-j="${j}">${esc(t.slice(a,b))}</span>`;p=b});return h+esc(t.slice(p))}
+const laHTML=(v,i)=>`<div class="la">`+((v.w&&v.w.length)?v.w.map((w,j)=>`<span class="lw" data-i="${i}" data-j="${j}">${esc(w.f)}</span>`).join(' '):esc(v.la))+`</div>`;
+const ilHTML=(v,i)=>`<div class="il">`+(v.w||[]).map((w,j)=>`<span class="lw col" data-i="${i}" data-j="${j}"><b>${esc(w.f)}</b><i>${esc(w.x||'–')}</i></span>`).join('')+`</div>`;
+function ctxHTML(){if(!ctx)return'';const t=[ctx.autore,ctx.opera,ctx.passo].filter(Boolean).join(' – ');return `<div class="card"><b>${esc(t||'Contesto del testo')}</b><p style="margin:6px 0">${esc(ctx.contesto||'')}</p><small style="color:var(--mu)">${[ctx.genere,ctx.epoca,ctx.metro].filter(Boolean).map(esc).join(' · ')}</small><div class="row"><button id="c360">Approfondisci a 360° con l’AI</button></div></div>`}
+function renderRes(){
+ $('#trList').innerHTML=ctxHTML()+results.map((v,i)=>`<article class="card">${mode==='gram'?laHTML(v,i):ilHTML(v,i)}${mode!=='lit'?`<p class="gr" data-i="${i}">${gramHTML(i)}</p>`:''}</article>`).join('')+(results.length?`<div class="row"><button id="cp">Copia traduzione</button></div>`:'');
+ $('#anList').innerHTML=results.map((v,i)=>`<article class="card">${laHTML(v,i)}<span class="pill">${esc(v.meter||'—')}</span>${v.scan?`<div class="scan">${esc(v.scan)}</div>`:''}${v.sint?`<p class="nota" style="color:var(--tx)"><b>Periodo:</b> ${esc(v.sint)}</p>`:''}${(v.fig&&v.fig.length)?`<details open><summary>Figure retoriche e metriche (${v.fig.length})</summary>${v.fig.map(f=>`<div class="fig"><b>${esc(f.n)}</b> · <i>${esc(f.t)}</i><br>${esc(f.s)}</div>`).join('')}</details>`:''}${v.nota?`<p class="nota">${esc(v.nota)}</p>`:''}<details open><summary>Parola per parola — tocca per i paradigmi</summary><div class="words">${(v.w||[]).map((w,j)=>`<button class="w" data-i="${i}" data-j="${j}">${esc(w.f)}</button>`).join('')}</div><div class="det" id="d${i}"></div></details></article>`).join('')||'<p class="empty">Nessuna analisi ancora.</p>';
+ $$('#seg button').forEach(b=>b.classList.toggle('on',b.dataset.m===mode));
+ const c=$('#c360');if(c)c.onclick=()=>ask('Contestualizza questo passo a 360°: autore, opera, collocazione, trama, temi, contesto storico-culturale, metro e stile.','F');
+ const cp=$('#cp');if(cp)cp.onclick=async()=>{try{await navigator.clipboard.writeText(results.map(v=>v.gram).join('\n'));cp.textContent='Copiata ✓'}catch(e){cp.textContent='Copia non disponibile'}};
+ paint();
+}
+$$('#seg button').forEach(b=>b.onclick=()=>{mode=b.dataset.m;renderRes()});
+
+/* Selezione parole (latino ⇄ italiano) */
+function paint(){$$('[data-j]').forEach(e=>e.classList.toggle('hl',sel.i===+e.dataset.i&&sel.s.has(+e.dataset.j)));
+ const n=sel.s.size;$('#selbar').hidden=!n;if(n){const ws=[...sel.s].sort((a,b)=>a-b).map(j=>results[sel.i].w[j]);$('#selt').textContent=n===1?`${ws[0].f} → ${ws[0].l}: ${ws[0].a}`:ws.map(w=>w.f).join(' · ')}}
+function toggle(i,j){if(sel.i!==i)sel={i,s:new Set()};sel.s.has(j)?sel.s.delete(j):sel.s.add(j);paint();
+ const d=$('#d'+i);if(d){if(sel.s.has(j)){const w=results[i].w[j];d.className='det on';d.innerHTML=`<b>${esc(w.f)}</b> → ${esc(w.l)} · ${esc(w.p)}<br>${esc(w.a)}<div class="pd">${esc(w.d)}</div>“${esc(w.m)}”`}else d.className='det'}}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-j]');if(!t)return;const s=getSelection();if(s&&!s.isCollapsed)return;toggle(+t.dataset.i,+t.dataset.j)});
+let stt;document.addEventListener('selectionchange',()=>{clearTimeout(stt);stt=setTimeout(()=>{const s=getSelection();if(!s||s.isCollapsed||!s.rangeCount)return;const r=s.getRangeAt(0),n=r.commonAncestorContainer,el=(n.nodeType===3?n.parentElement:n).closest?.('.gr');if(!el)return;
+ const i=+el.dataset.i,a=document.createRange();a.selectNodeContents(el);a.setEnd(r.startContainer,r.startOffset);const s0=a.toString().length,e0=s0+r.toString().length;
+ const js=ranges(results[i]).filter(([x,y])=>x<e0&&y>s0).map(q=>q[2]);if(js.length){sel={i,s:new Set(js)};paint()}},300)});
+$('#selx').onclick=()=>{sel.s.clear();getSelection().removeAllRanges();$$('.det').forEach(d=>d.className='det');paint()};
+$('#selask').onclick=()=>{const v=results[sel.i],ws=[...sel.s].sort((a,b)=>a-b).map(j=>v.w[j]);
+ ask(`Nel passo «${v.la}» ho selezionato: ${ws.map(w=>`«${w.f}» (${w.l}${w.g?', reso con “'+w.g+'”':''})`).join(', ')}. Spiegami nel dettaglio queste parole: analisi morfologica, funzione sintattica nel periodo, paradigma completo, scelte di traduzione ed eventuali sfumature stilistiche o metriche nel contesto dell’opera.`,'F')};
+
+async function run(){
+ const t=$('#src').value.trim();if(!t||busy)return;
+ if(!store.get('lat_key')){$('#er').textContent=copy({code:'no_key'});return}
+ busy=true;results=[];ctx=null;chatF=[];chatS=[];idx=0;sel={i:-1,s:new Set()};curId='v'+Date.now();chats();$('#er').textContent='';
+ const cs=chunks(t);ctl=new AbortController();
+ $('#go').disabled=true;$('#stop').hidden=false;$('#bar').hidden=false;$('#bar i').style.width='4%';
+ $('#trList').innerHTML='<p class="empty">Riconosco il testo e preparo l’analisi…</p>';$('#anList').innerHTML='';go('res');results=[];tab('tr');
+ try{
+  try{ctx=await identify(t)}catch(e){if(['cancelled','no_key','bad_key'].includes(e.code))throw e}
+  renderRes();
+  for(let k=0;k<cs.length;k++){
+   $('#bar i').style.width=(8+k/cs.length*92)+'%';
+   const{text}=await claudeCall([{role:'user',content:PROMPT(cs[k],k?cs[k-1][cs[k-1].length-1]:'')}],{signal:ctl.signal,maxTokens:12000});
+   const arr=parseJ(text,'[',']');results.push(...(Array.isArray(arr)?arr:[arr]));renderRes();saveCur();
+  }
+  $('#bar i').style.width='100%';upd();
+ }catch(e){if(e.code!=='cancelled')$('#trList').insertAdjacentHTML('beforeend',`<p class="err">${esc(copy(e))} Le parti già analizzate restano visibili e salvate.</p>`)}
+ finally{busy=false;$('#go').disabled=false;$('#stop').hidden=true;setTimeout(()=>$('#bar').hidden=true,800);saveCur()}
+}
+$('#go').onclick=run;$('#stop').onclick=()=>ctl&&ctl.abort();
+
+/* AI: chat libera e studio guidato */
+const SUG={F:['Contestualizza il passo a 360°','Quali figure retoriche ci sono?','Dammi un esercizio simile'],S:['Inizia lo studio','Dammi un indizio','Mostra la soluzione','Spiegami meglio']};
+['F','S'].forEach(k=>{$('#ch'+k).innerHTML=SUG[k].map(s=>`<button>${s}</button>`).join('');
+ $('#ch'+k).onclick=e=>{if(e.target.tagName!=='BUTTON')return;const s=e.target.textContent;ask(s==='Inizia lo studio'?`Iniziamo lo studio guidato dal verso ${idx+1}.`:s==='Contestualizza il passo a 360°'?'Contestualizza questo passo a 360°: autore, opera, collocazione, trama, temi, contesto storico-culturale, metro e stile.':s,k)};
+ $('#s'+k).onclick=()=>ask($('#q'+k).value,k);$('#q'+k).onkeydown=e=>{if(e.key==='Enter')ask($('#q'+k).value,k)}});
+function upd(){$('#stp').textContent=results.length?`Verso ${idx+1} di ${results.length}`:'Nessun testo'}
+function nav(d){if(!results.length)return;idx=Math.max(0,Math.min(results.length-1,idx+d));upd();ask(`Passiamo al verso ${idx+1}: «${results[idx].la}». Guidami passo passo.`,'S')}
+$('#sprev').onclick=()=>nav(-1);$('#snext').onclick=()=>nav(1);
+const bub=(k,c,t)=>{const d=document.createElement('div');d.className='msg '+c;c==='ai'&&t!=='Sto pensando…'?d.innerHTML=md(t):d.textContent=t;$('#c'+k).appendChild(d);d.scrollIntoView({block:'end',behavior:'smooth'});return d};
+function chats(){['F','S'].forEach(k=>{$('#c'+k).innerHTML='';(k==='F'?chatF:chatS).forEach(m=>bub(k,m.role==='user'?'user':'ai',m.content))});upd()}
+function sys(k){
+ const c=ctx?`Contesto identificato del passo: ${JSON.stringify(ctx)}.`:'';
+ const body=results.length?`Testo e traduzione:\n${results.map((v,i)=>`${i+1}. ${v.la} = ${v.gram}`).join('\n').slice(0,6000)}`:($('#src').value?`Testo dello studente:\n${$('#src').value.slice(0,5000)}`:'');
+ let s=`Sei Latinista, tutor di latino per studenti italiani di liceo e università: preciso, chiaro, incoraggiante, sempre in italiano. REGOLA DI CONTESTUALIZZAZIONE: ogni volta che ricevi un passo latino (anche un solo verso o una frase staccata) riconosci autore, opera, libro/capitolo e posizione del passo e, se serve, spiega a 360°: autore ed epoca, opera e struttura, collocazione e trama del passo, genere e temi, contesto storico-culturale, metro e stile, lessico chiave, fortuna e confronti. Se non sei sicuro dell’attribuzione dillo apertamente e spiega cosa deduci da lingua, metro e contenuto: non inventare riferimenti. Usa paradigmi e tabelle di declinazione o coniugazione quando utili.\n${c}\n${body}`;
+ if(k==='S')s+=`\nMODALITÀ STUDIO GUIDATO: guidi lo studente passo passo nella traduzione, un verso per volta (verso attuale: ${idx+1}). Un solo passaggio e una sola domanda per messaggio, brevi: poi aspetta la risposta. Ordine: (1) all’inizio, 30 secondi di contesto del passo; (2) individuare verbo/i e soggetto; (3) complementi e costrutti; (4) lessico; (5) lo studente propone la traduzione e tu la correggi con gentilezza; (6) metrica e figure. Non dare la traduzione completa se non richiesta con “soluzione”: dai indizi graduali.`;
+ return s}
+async function ask(q,k='F'){
+ q=q.trim();if(!q||busy)return;
+ if(!store.get('lat_key')){go('set');msg('Inserisci prima la chiave API.','err');return}
+ if(k==='S'&&!results.length){go('home');return}
+ if(k==='F'){go('chat');if(!curId)curId='v'+Date.now()}else{go('res');tab('st')}
+ const ch=k==='F'?chatF:chatS;busy=true;$('#q'+k).value='';
+ ch.push({role:'user',content:q});bub(k,'user',q);const b=bub(k,'ai','Sto pensando…');
+ try{const{text}=await claudeCall(ch.slice(-9),{system:sys(k),maxTokens:2500,onText:({text})=>{b.textContent=text}});ch.push({role:'assistant',content:text});b.innerHTML=md(text);saveCur()}
+ catch(e){ch.pop();b.textContent=e.text||copy(e)}finally{busy=false}
+}
+recent();chats();
+if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script></body></html>
